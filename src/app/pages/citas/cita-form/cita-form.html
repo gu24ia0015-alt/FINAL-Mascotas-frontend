@@ -1,0 +1,63 @@
+﻿<div class="contenedor">
+  <h2>{{ esEdicion() ? 'Editar Cita' : 'Nueva Cita' }}</h2>
+
+  <p *ngIf="error()" class="mensaje-error">{{ error() }}</p>
+
+  <form (ngSubmit)="guardar()" *ngIf="!cargando()">
+    <div class="campo">
+      <label>Mascota</label>
+      <select [ngModel]="mascotaId()" (ngModelChange)="mascotaId.set($event)" name="mascota">
+        <option [ngValue]="null">-- Selecciona --</option>
+        <option *ngFor="let m of mascotas()" [ngValue]="m.id">{{ m.nombre }}</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Veterinario</label>
+      <select [ngModel]="veterinarioId()" (ngModelChange)="veterinarioId.set($event)" name="veterinario">
+        <option [ngValue]="null">-- Selecciona --</option>
+        <option *ngFor="let v of veterinarios()" [ngValue]="v.id">{{ v.nombre }} {{ v.apellido }}</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Servicio</label>
+      <select [ngModel]="servicioId()" (ngModelChange)="servicioId.set($event)" name="servicio">
+        <option [ngValue]="null">-- Selecciona --</option>
+        <option *ngFor="let s of servicios()" [ngValue]="s.id">{{ s.nombre }}</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Fecha y hora</label>
+      <input type="datetime-local" [ngModel]="fechaHora()" (ngModelChange)="fechaHora.set($event)" name="fechaHora" />
+    </div>
+
+    <div class="campo">
+      <label>Estado</label>
+      <select [ngModel]="estado()" (ngModelChange)="estado.set($event)" name="estado">
+        <option value="agendada">Agendada</option>
+        <option value="confirmada">Confirmada</option>
+        <option value="completada">Completada</option>
+        <option value="cancelada">Cancelada</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Motivo</label>
+      <input type="text" [ngModel]="motivo()" (ngModelChange)="motivo.set($event)" name="motivo" />
+    </div>
+
+    <div class="campo">
+      <label>Costo</label>
+      <input type="number" step="0.01" [ngModel]="costo()" (ngModelChange)="costo.set($event)" name="costo" />
+    </div>
+
+    <div class="acciones-form">
+      <app-boton texto="Guardar" tipo="primario"></app-boton>
+      <app-boton texto="Cancelar" tipo="secundario" (clickBoton)="cancelar()"></app-boton>
+    </div>
+  </form>
+
+  <p *ngIf="cargando()">Guardando...</p>
+</div>

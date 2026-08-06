@@ -7,6 +7,8 @@ import { ProductoList } from './pages/productos/producto-list/producto-list';
 import { ProductoForm } from './pages/productos/producto-form/producto-form';
 import { PedidoList } from './pages/pedidos/pedido-list/pedido-list';
 import { PedidoForm } from './pages/pedidos/pedido-form/pedido-form';
+import { CitaList } from './pages/citas/cita-list/cita-list';
+import { CitaForm } from './pages/citas/cita-form/cita-form';
 
 export const routes: Routes = [
   { path: 'clientes', component: ClienteList },
@@ -21,5 +23,8 @@ export const routes: Routes = [
   { path: 'pedidos', component: PedidoList },
   { path: 'pedidos/nuevo', component: PedidoForm },
   { path: 'pedidos/editar/:id', component: PedidoForm },
+  { path: 'citas', component: CitaList },
+  { path: 'citas/nuevo', component: CitaForm },
+  { path: 'citas/editar/:id', component: CitaForm },
   { path: '', redirectTo: 'clientes', pathMatch: 'full' }
 ];
