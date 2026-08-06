@@ -1,5 +1,6 @@
 ﻿import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { ClienteService, Cliente } from '../../../services/cliente';
 import { Boton } from '../../../shared/boton/boton';
 
@@ -15,7 +16,7 @@ export class ClienteList implements OnInit {
   cargando = signal<boolean>(true);
   error = signal<string>('');
 
-  constructor(private clienteService: ClienteService) {}
+  constructor(private clienteService: ClienteService, private router: Router) {}
 
   ngOnInit(): void {
     this.cargarClientes();
@@ -34,6 +35,14 @@ export class ClienteList implements OnInit {
         console.error(err);
       }
     });
+  }
+
+  nuevoCliente(): void {
+    this.router.navigate(['/clientes/nuevo']);
+  }
+
+  editarCliente(id: number): void {
+    this.router.navigate(['/clientes/editar', id]);
   }
 
   eliminarCliente(id: number): void {

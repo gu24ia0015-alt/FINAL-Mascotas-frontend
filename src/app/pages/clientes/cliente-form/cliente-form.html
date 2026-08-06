@@ -1,0 +1,35 @@
+﻿<div class="contenedor">
+  <h2>{{ esEdicion() ? 'Editar Cliente' : 'Nuevo Cliente' }}</h2>
+
+  <p *ngIf="error()" class="mensaje-error">{{ error() }}</p>
+
+  <form (ngSubmit)="guardar()" *ngIf="!cargando()">
+    <app-input etiqueta="Nombre" [valor]="nombre()" [requerido]="true" (valorCambio)="nombre.set($event)"></app-input>
+    <app-input etiqueta="Apellido" [valor]="apellido()" [requerido]="true" (valorCambio)="apellido.set($event)"></app-input>
+    <app-input etiqueta="Email" tipo="email" [valor]="email()" [requerido]="true" (valorCambio)="email.set($event)"></app-input>
+    <app-input etiqueta="Telefono" [valor]="telefono()" [requerido]="true" (valorCambio)="telefono.set($event)"></app-input>
+    <app-input etiqueta="DNI" [valor]="dni()" [requerido]="true" (valorCambio)="dni.set($event)"></app-input>
+    <app-input etiqueta="Fecha de nacimiento" tipo="date" [valor]="fecha_nacimiento()" (valorCambio)="fecha_nacimiento.set($event)"></app-input>
+
+    <div class="campo">
+      <label>Genero</label>
+      <select [ngModel]="genero()" (ngModelChange)="genero.set($event)" name="genero">
+        <option value="M">Masculino</option>
+        <option value="F">Femenino</option>
+        <option value="O">Otro</option>
+      </select>
+    </div>
+
+    <div class="campo-checkbox">
+      <input type="checkbox" id="activo" [ngModel]="activo()" (ngModelChange)="activo.set($event)" name="activo" />
+      <label for="activo">Cliente activo</label>
+    </div>
+
+    <div class="acciones-form">
+      <app-boton texto="Guardar" tipo="primario"></app-boton>
+      <app-boton texto="Cancelar" tipo="secundario" (clickBoton)="cancelar()"></app-boton>
+    </div>
+  </form>
+
+  <p *ngIf="cargando()">Guardando...</p>
+</div>

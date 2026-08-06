@@ -1,7 +1,7 @@
 ﻿<div class="contenedor">
   <div class="encabezado">
     <h2>Clientes</h2>
-    <app-boton texto="+ Nuevo Cliente" tipo="primario"></app-boton>
+    <app-boton texto="+ Nuevo Cliente" tipo="primario" (clickBoton)="nuevoCliente()"></app-boton>
   </div>
 
   <p *ngIf="cargando()">Cargando clientes...</p>
@@ -26,7 +26,7 @@
         <td>{{ cliente.telefono }}</td>
         <td>{{ cliente.activo ? 'Si' : 'No' }}</td>
         <td class="acciones">
-          <app-boton texto="Editar" tipo="secundario"></app-boton>
+          <app-boton texto="Editar" tipo="secundario" (clickBoton)="editarCliente(cliente.id!)"></app-boton>
           <app-boton texto="Eliminar" tipo="peligro" (clickBoton)="eliminarCliente(cliente.id!)"></app-boton>
         </td>
       </tr>
