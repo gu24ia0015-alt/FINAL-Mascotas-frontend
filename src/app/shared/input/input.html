@@ -1,0 +1,9 @@
+﻿<div class="campo">
+  <label *ngIf="etiqueta">{{ etiqueta }}<span *ngIf="requerido" class="requerido">*</span></label>
+  <input
+    [type]="tipo"
+    [placeholder]="placeholder"
+    [value]="valor"
+    (input)="onInput($event)"
+  />
+</div>

@@ -1,0 +1,30 @@
+﻿.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.campo label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+.requerido {
+  color: #dc2626;
+  margin-left: 0.2rem;
+}
+
+.campo input {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.campo input:focus {
+  border-color: #2563eb;
+}
