@@ -1,0 +1,35 @@
+﻿<div class="contenedor">
+  <div class="encabezado">
+    <h2>Mascotas</h2>
+    <app-boton texto="+ Nueva Mascota" tipo="primario" (clickBoton)="nuevaMascota()"></app-boton>
+  </div>
+
+  <p *ngIf="cargando()">Cargando mascotas...</p>
+  <p *ngIf="error()" class="mensaje-error">{{ error() }}</p>
+
+  <table *ngIf="!cargando() && !error()" class="tabla">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Especie</th>
+        <th>Dueno</th>
+        <th>Sexo</th>
+        <th>Esterilizado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mascota of mascotas()">
+        <td>{{ mascota.nombre }}</td>
+        <td>{{ mascota.especie_nombre }}</td>
+        <td>{{ mascota.cliente_nombre }}</td>
+        <td>{{ mascota.sexo === 'M' ? 'Macho' : 'Hembra' }}</td>
+        <td>{{ mascota.esterilizado ? 'Si' : 'No' }}</td>
+        <td class="acciones">
+          <app-boton texto="Editar" tipo="secundario" (clickBoton)="editarMascota(mascota.id!)"></app-boton>
+          <app-boton texto="Eliminar" tipo="peligro" (clickBoton)="eliminarMascota(mascota.id!)"></app-boton>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

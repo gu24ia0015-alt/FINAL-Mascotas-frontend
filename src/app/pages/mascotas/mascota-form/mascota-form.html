@@ -1,0 +1,48 @@
+﻿<div class="contenedor">
+  <h2>{{ esEdicion() ? 'Editar Mascota' : 'Nueva Mascota' }}</h2>
+
+  <p *ngIf="error()" class="mensaje-error">{{ error() }}</p>
+
+  <form (ngSubmit)="guardar()" *ngIf="!cargando()">
+    <app-input etiqueta="Nombre" [valor]="nombre()" [requerido]="true" (valorCambio)="nombre.set($event)"></app-input>
+
+    <div class="campo">
+      <label>Cliente (dueno)</label>
+      <select [ngModel]="clienteId()" (ngModelChange)="clienteId.set($event)" name="cliente">
+        <option [ngValue]="null">-- Selecciona --</option>
+        <option *ngFor="let c of clientes()" [ngValue]="c.id">{{ c.nombre }} {{ c.apellido }}</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Especie</label>
+      <select [ngModel]="especieId()" (ngModelChange)="especieId.set($event)" name="especie">
+        <option [ngValue]="null">-- Selecciona --</option>
+        <option *ngFor="let e of especies()" [ngValue]="e.id">{{ e.nombre }}</option>
+      </select>
+    </div>
+
+    <app-input etiqueta="Fecha de nacimiento" tipo="date" [valor]="fecha_nacimiento()" (valorCambio)="fecha_nacimiento.set($event)"></app-input>
+    <app-input etiqueta="Color" [valor]="color()" (valorCambio)="color.set($event)"></app-input>
+
+    <div class="campo">
+      <label>Sexo</label>
+      <select [ngModel]="sexo()" (ngModelChange)="sexo.set($event)" name="sexo">
+        <option value="M">Macho</option>
+        <option value="H">Hembra</option>
+      </select>
+    </div>
+
+    <div class="campo-checkbox">
+      <input type="checkbox" id="esterilizado" [ngModel]="esterilizado()" (ngModelChange)="esterilizado.set($event)" name="esterilizado" />
+      <label for="esterilizado">Esterilizado</label>
+    </div>
+
+    <div class="acciones-form">
+      <app-boton texto="Guardar" tipo="primario"></app-boton>
+      <app-boton texto="Cancelar" tipo="secundario" (clickBoton)="cancelar()"></app-boton>
+    </div>
+  </form>
+
+  <p *ngIf="cargando()">Guardando...</p>
+</div>
