@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { PedidoService, Pedido } from '../../../services/pedido';
+import { NavegacionService } from '../../../services/navegacion';
 import { Boton } from '../../../shared/boton/boton';
 
 @Component({
@@ -16,7 +16,7 @@ export class PedidoList implements OnInit {
   cargando = signal<boolean>(true);
   error = signal<string>('');
 
-  constructor(private pedidoService: PedidoService, private router: Router) {}
+  constructor(private pedidoService: PedidoService, public nav: NavegacionService) {}
 
   ngOnInit(): void {
     this.cargarPedidos();
@@ -31,11 +31,11 @@ export class PedidoList implements OnInit {
   }
 
   nuevoPedido(): void {
-    this.router.navigate(['/pedidos/nuevo']);
+    this.nav.irANuevo();
   }
 
   editarPedido(id: number): void {
-    this.router.navigate(['/pedidos/editar', id]);
+    this.nav.irAEditar(id);
   }
 
   eliminarPedido(id: number): void {

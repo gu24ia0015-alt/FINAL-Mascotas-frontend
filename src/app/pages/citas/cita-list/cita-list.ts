@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { CitaService, Cita } from '../../../services/cita';
+import { NavegacionService } from '../../../services/navegacion';
 import { Boton } from '../../../shared/boton/boton';
 
 @Component({
@@ -16,7 +16,7 @@ export class CitaList implements OnInit {
   cargando = signal<boolean>(true);
   error = signal<string>('');
 
-  constructor(private citaService: CitaService, private router: Router) {}
+  constructor(private citaService: CitaService, public nav: NavegacionService) {}
 
   ngOnInit(): void {
     this.cargarCitas();
@@ -31,11 +31,11 @@ export class CitaList implements OnInit {
   }
 
   nuevaCita(): void {
-    this.router.navigate(['/citas/nuevo']);
+    this.nav.irANuevo();
   }
 
   editarCita(id: number): void {
-    this.router.navigate(['/citas/editar', id]);
+    this.nav.irAEditar(id);
   }
 
   eliminarCita(id: number): void {

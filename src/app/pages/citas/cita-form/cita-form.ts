@@ -2,9 +2,9 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CitaService, Cita } from '../../../services/cita';
 import { MascotaService, Mascota } from '../../../services/mascota';
+import { NavegacionService } from '../../../services/navegacion';
 import { Boton } from '../../../shared/boton/boton';
 import { environment } from '../../../../environments/environment';
 
@@ -40,8 +40,7 @@ export class CitaForm implements OnInit {
     private citaService: CitaService,
     private mascotaService: MascotaService,
     private http: HttpClient,
-    private route: ActivatedRoute,
-    private router: Router
+    public nav: NavegacionService
   ) {}
 
   ngOnInit(): void {
@@ -49,11 +48,11 @@ export class CitaForm implements OnInit {
     this.http.get<Veterinario[]>(`${environment.apiUrl}/veterinarios/`).subscribe({ next: (d) => this.veterinarios.set(d), error: () => {} });
     this.http.get<Servicio[]>(`${environment.apiUrl}/servicios/`).subscribe({ next: (d) => this.servicios.set(d), error: () => {} });
 
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
+    const id = this.nav.idSeleccionado();
+    if (id) {
       this.esEdicion.set(true);
-      this.citaId = Number(idParam);
-      this.cargarCita(this.citaId);
+      this.citaId = id;
+      this.cargarCita(id);
     }
   }
 
@@ -96,12 +95,12 @@ export class CitaForm implements OnInit {
       : this.citaService.crear(cita);
 
     peticion.subscribe({
-      next: () => this.router.navigate(['/citas']),
+      next: () => this.nav.volverALista(),
       error: (err) => { this.error.set('Error al guardar la cita.'); this.cargando.set(false); console.error(err); }
     });
   }
 
   cancelar(): void {
-    this.router.navigate(['/citas']);
+    this.nav.volverALista();
   }
 }

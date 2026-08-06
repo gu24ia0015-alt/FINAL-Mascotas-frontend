@@ -2,9 +2,9 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
 import { PedidoService, Pedido } from '../../../services/pedido';
 import { ClienteService, Cliente } from '../../../services/cliente';
+import { NavegacionService } from '../../../services/navegacion';
 import { Boton } from '../../../shared/boton/boton';
 import { environment } from '../../../../environments/environment';
 
@@ -38,8 +38,7 @@ export class PedidoForm implements OnInit {
     private pedidoService: PedidoService,
     private clienteService: ClienteService,
     private http: HttpClient,
-    private route: ActivatedRoute,
-    private router: Router
+    public nav: NavegacionService
   ) {}
 
   ngOnInit(): void {
@@ -54,11 +53,11 @@ export class PedidoForm implements OnInit {
       error: () => {}
     });
 
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
+    const id = this.nav.idSeleccionado();
+    if (id) {
       this.esEdicion.set(true);
-      this.pedidoId = Number(idParam);
-      this.cargarPedido(this.pedidoId);
+      this.pedidoId = id;
+      this.cargarPedido(id);
     }
   }
 
@@ -105,12 +104,12 @@ export class PedidoForm implements OnInit {
       : this.pedidoService.crear(pedido);
 
     peticion.subscribe({
-      next: () => this.router.navigate(['/pedidos']),
+      next: () => this.nav.volverALista(),
       error: (err) => { this.error.set('Error al guardar el pedido.'); this.cargando.set(false); console.error(err); }
     });
   }
 
   cancelar(): void {
-    this.router.navigate(['/pedidos']);
+    this.nav.volverALista();
   }
 }

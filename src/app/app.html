@@ -1,2 +1,26 @@
 ﻿<app-navbar></app-navbar>
-<router-outlet></router-outlet>
+
+<ng-container *ngIf="nav.modulo() === 'clientes'">
+  <app-cliente-list *ngIf="nav.vista() === 'lista'"></app-cliente-list>
+  <app-cliente-form *ngIf="nav.vista() === 'formulario'"></app-cliente-form>
+</ng-container>
+
+<ng-container *ngIf="nav.modulo() === 'mascotas'">
+  <app-mascota-list *ngIf="nav.vista() === 'lista'"></app-mascota-list>
+  <app-mascota-form *ngIf="nav.vista() === 'formulario'"></app-mascota-form>
+</ng-container>
+
+<ng-container *ngIf="nav.modulo() === 'productos'">
+  <app-producto-list *ngIf="nav.vista() === 'lista'"></app-producto-list>
+  <app-producto-form *ngIf="nav.vista() === 'formulario'"></app-producto-form>
+</ng-container>
+
+<ng-container *ngIf="nav.modulo() === 'pedidos'">
+  <app-pedido-list *ngIf="nav.vista() === 'lista'"></app-pedido-list>
+  <app-pedido-form *ngIf="nav.vista() === 'formulario'"></app-pedido-form>
+</ng-container>
+
+<ng-container *ngIf="nav.modulo() === 'citas'">
+  <app-cita-list *ngIf="nav.vista() === 'lista'"></app-cita-list>
+  <app-cita-form *ngIf="nav.vista() === 'formulario'"></app-cita-form>
+</ng-container>

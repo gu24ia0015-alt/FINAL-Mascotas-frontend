@@ -1,8 +1,8 @@
 ﻿import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ClienteService, Cliente } from '../../../services/cliente';
+import { NavegacionService } from '../../../services/navegacion';
 import { Boton } from '../../../shared/boton/boton';
 import { CampoInput } from '../../../shared/input/input';
 
@@ -29,18 +29,14 @@ export class ClienteForm implements OnInit {
   activo = signal<boolean>(true);
   password_hash = signal<string>('');
 
-  constructor(
-    private clienteService: ClienteService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private clienteService: ClienteService, public nav: NavegacionService) {}
 
   ngOnInit(): void {
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
+    const id = this.nav.idSeleccionado();
+    if (id) {
       this.esEdicion.set(true);
-      this.clienteId = Number(idParam);
-      this.cargarCliente(this.clienteId);
+      this.clienteId = id;
+      this.cargarCliente(id);
     }
   }
 
@@ -58,11 +54,7 @@ export class ClienteForm implements OnInit {
         this.activo.set(data.activo ?? true);
         this.cargando.set(false);
       },
-      error: (err) => {
-        this.error.set('No se pudo cargar el cliente.');
-        this.cargando.set(false);
-        console.error(err);
-      }
+      error: (err) => { this.error.set('No se pudo cargar el cliente.'); this.cargando.set(false); console.error(err); }
     });
   }
 
@@ -80,24 +72,17 @@ export class ClienteForm implements OnInit {
     };
 
     this.cargando.set(true);
-
     const peticion = this.esEdicion()
       ? this.clienteService.actualizar(this.clienteId!, cliente)
       : this.clienteService.crear(cliente);
 
     peticion.subscribe({
-      next: () => {
-        this.router.navigate(['/clientes']);
-      },
-      error: (err) => {
-        this.error.set('Error al guardar el cliente. Revisa que todos los campos sean validos.');
-        this.cargando.set(false);
-        console.error(err);
-      }
+      next: () => this.nav.volverALista(),
+      error: (err) => { this.error.set('Error al guardar el cliente.'); this.cargando.set(false); console.error(err); }
     });
   }
 
   cancelar(): void {
-    this.router.navigate(['/clientes']);
+    this.nav.volverALista();
   }
 }

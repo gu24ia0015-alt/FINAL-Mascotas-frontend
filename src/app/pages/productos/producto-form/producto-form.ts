@@ -2,8 +2,8 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ProductoService, Producto } from '../../../services/producto';
+import { NavegacionService } from '../../../services/navegacion';
 import { Boton } from '../../../shared/boton/boton';
 import { CampoInput } from '../../../shared/input/input';
 import { environment } from '../../../../environments/environment';
@@ -40,19 +40,18 @@ export class ProductoForm implements OnInit {
   constructor(
     private productoService: ProductoService,
     private http: HttpClient,
-    private route: ActivatedRoute,
-    private router: Router
+    public nav: NavegacionService
   ) {}
 
   ngOnInit(): void {
     this.http.get<Categoria[]>(`${environment.apiUrl}/categorias/`).subscribe({ next: (d) => this.categorias.set(d), error: () => {} });
     this.http.get<Proveedor[]>(`${environment.apiUrl}/proveedores/`).subscribe({ next: (d) => this.proveedores.set(d), error: () => {} });
 
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
+    const id = this.nav.idSeleccionado();
+    if (id) {
       this.esEdicion.set(true);
-      this.productoId = Number(idParam);
-      this.cargarProducto(this.productoId);
+      this.productoId = id;
+      this.cargarProducto(id);
     }
   }
 
@@ -99,12 +98,12 @@ export class ProductoForm implements OnInit {
       : this.productoService.crear(producto);
 
     peticion.subscribe({
-      next: () => this.router.navigate(['/productos']),
+      next: () => this.nav.volverALista(),
       error: (err) => { this.error.set('Error al guardar el producto.'); this.cargando.set(false); console.error(err); }
     });
   }
 
   cancelar(): void {
-    this.router.navigate(['/productos']);
+    this.nav.volverALista();
   }
 }

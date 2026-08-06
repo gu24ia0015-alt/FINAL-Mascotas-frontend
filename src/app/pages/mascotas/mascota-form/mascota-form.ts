@@ -2,9 +2,9 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MascotaService, Mascota } from '../../../services/mascota';
 import { ClienteService, Cliente } from '../../../services/cliente';
+import { NavegacionService } from '../../../services/navegacion';
 import { Boton } from '../../../shared/boton/boton';
 import { CampoInput } from '../../../shared/input/input';
 import { environment } from '../../../../environments/environment';
@@ -41,22 +41,18 @@ export class MascotaForm implements OnInit {
     private mascotaService: MascotaService,
     private clienteService: ClienteService,
     private http: HttpClient,
-    private route: ActivatedRoute,
-    private router: Router
+    public nav: NavegacionService
   ) {}
 
   ngOnInit(): void {
     this.clienteService.listar().subscribe({ next: (data) => this.clientes.set(data) });
-    this.http.get<Especie[]>(`${environment.apiUrl}/especies/`).subscribe({
-      next: (data) => this.especies.set(data),
-      error: () => {}
-    });
+    this.http.get<Especie[]>(`${environment.apiUrl}/especies/`).subscribe({ next: (data) => this.especies.set(data), error: () => {} });
 
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
+    const id = this.nav.idSeleccionado();
+    if (id) {
       this.esEdicion.set(true);
-      this.mascotaId = Number(idParam);
-      this.cargarMascota(this.mascotaId);
+      this.mascotaId = id;
+      this.cargarMascota(id);
     }
   }
 
@@ -103,12 +99,12 @@ export class MascotaForm implements OnInit {
       : this.mascotaService.crear(mascota);
 
     peticion.subscribe({
-      next: () => this.router.navigate(['/mascotas']),
+      next: () => this.nav.volverALista(),
       error: (err) => { this.error.set('Error al guardar la mascota.'); this.cargando.set(false); console.error(err); }
     });
   }
 
   cancelar(): void {
-    this.router.navigate(['/mascotas']);
+    this.nav.volverALista();
   }
 }

@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { ProductoService, Producto } from '../../../services/producto';
+import { NavegacionService } from '../../../services/navegacion';
 import { Boton } from '../../../shared/boton/boton';
 
 @Component({
@@ -16,7 +16,7 @@ export class ProductoList implements OnInit {
   cargando = signal<boolean>(true);
   error = signal<string>('');
 
-  constructor(private productoService: ProductoService, private router: Router) {}
+  constructor(private productoService: ProductoService, public nav: NavegacionService) {}
 
   ngOnInit(): void {
     this.cargarProductos();
@@ -31,11 +31,11 @@ export class ProductoList implements OnInit {
   }
 
   nuevoProducto(): void {
-    this.router.navigate(['/productos/nuevo']);
+    this.nav.irANuevo();
   }
 
   editarProducto(id: number): void {
-    this.router.navigate(['/productos/editar', id]);
+    this.nav.irAEditar(id);
   }
 
   eliminarProducto(id: number): void {

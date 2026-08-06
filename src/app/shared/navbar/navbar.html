@@ -1,10 +1,10 @@
 ﻿<nav class="navbar">
   <div class="navbar-marca">🐾 Tienda de Mascotas</div>
   <div class="navbar-links">
-    <a routerLink="/clientes" routerLinkActive="activo">Clientes</a>
-    <a routerLink="/mascotas" routerLinkActive="activo">Mascotas</a>
-    <a routerLink="/productos" routerLinkActive="activo">Productos</a>
-    <a routerLink="/pedidos" routerLinkActive="activo">Pedidos</a>
-    <a routerLink="/citas" routerLinkActive="activo">Citas</a>
+    <a (click)="nav.irAModulo('clientes')" [class.activo]="nav.modulo() === 'clientes'">Clientes</a>
+    <a (click)="nav.irAModulo('mascotas')" [class.activo]="nav.modulo() === 'mascotas'">Mascotas</a>
+    <a (click)="nav.irAModulo('productos')" [class.activo]="nav.modulo() === 'productos'">Productos</a>
+    <a (click)="nav.irAModulo('pedidos')" [class.activo]="nav.modulo() === 'pedidos'">Pedidos</a>
+    <a (click)="nav.irAModulo('citas')" [class.activo]="nav.modulo() === 'citas'">Citas</a>
   </div>
 </nav>
