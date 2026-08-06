@@ -1,0 +1,56 @@
+﻿<div class="contenedor">
+  <h2>{{ esEdicion() ? 'Editar Pedido' : 'Nuevo Pedido' }}</h2>
+
+  <p *ngIf="error()" class="mensaje-error">{{ error() }}</p>
+
+  <form (ngSubmit)="guardar()" *ngIf="!cargando()">
+    <div class="campo">
+      <label>Cliente</label>
+      <select [ngModel]="clienteId()" (ngModelChange)="onClienteChange($event)" name="cliente">
+        <option [ngValue]="null">-- Selecciona --</option>
+        <option *ngFor="let c of clientes()" [ngValue]="c.id">{{ c.nombre }} {{ c.apellido }}</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Direccion</label>
+      <select [ngModel]="direccionId()" (ngModelChange)="direccionId.set($event)" name="direccion">
+        <option [ngValue]="null">-- Selecciona --</option>
+        <option *ngFor="let d of direccionesFiltradas()" [ngValue]="d.id">{{ d.calle }}, {{ d.ciudad }}</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Estado</label>
+      <select [ngModel]="estado()" (ngModelChange)="estado.set($event)" name="estado">
+        <option value="pendiente">Pendiente</option>
+        <option value="pagado">Pagado</option>
+        <option value="enviado">Enviado</option>
+        <option value="entregado">Entregado</option>
+        <option value="cancelado">Cancelado</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Subtotal</label>
+      <input type="number" step="0.01" [ngModel]="subtotal()" (ngModelChange)="subtotal.set($event)" name="subtotal" />
+    </div>
+
+    <div class="campo">
+      <label>Total</label>
+      <input type="number" step="0.01" [ngModel]="total()" (ngModelChange)="total.set($event)" name="total" />
+    </div>
+
+    <div class="campo">
+      <label>Metodo de pago</label>
+      <input type="text" [ngModel]="metodoPago()" (ngModelChange)="metodoPago.set($event)" name="metodoPago" />
+    </div>
+
+    <div class="acciones-form">
+      <app-boton texto="Guardar" tipo="primario"></app-boton>
+      <app-boton texto="Cancelar" tipo="secundario" (clickBoton)="cancelar()"></app-boton>
+    </div>
+  </form>
+
+  <p *ngIf="cargando()">Guardando...</p>
+</div>
