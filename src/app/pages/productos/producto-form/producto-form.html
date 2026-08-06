@@ -1,0 +1,49 @@
+﻿<div class="contenedor">
+  <h2>{{ esEdicion() ? 'Editar Producto' : 'Nuevo Producto' }}</h2>
+
+  <p *ngIf="error()" class="mensaje-error">{{ error() }}</p>
+
+  <form (ngSubmit)="guardar()" *ngIf="!cargando()">
+    <app-input etiqueta="Nombre" [valor]="nombre()" [requerido]="true" (valorCambio)="nombre.set($event)"></app-input>
+    <app-input etiqueta="SKU" [valor]="sku()" [requerido]="true" (valorCambio)="sku.set($event)"></app-input>
+    <app-input etiqueta="Marca" [valor]="marca()" (valorCambio)="marca.set($event)"></app-input>
+
+    <div class="campo">
+      <label>Precio</label>
+      <input type="number" step="0.01" [ngModel]="precio()" (ngModelChange)="precio.set($event)" name="precio" />
+    </div>
+
+    <div class="campo">
+      <label>Costo</label>
+      <input type="number" step="0.01" [ngModel]="costo()" (ngModelChange)="costo.set($event)" name="costo" />
+    </div>
+
+    <div class="campo">
+      <label>Stock</label>
+      <input type="number" [ngModel]="stock()" (ngModelChange)="stock.set($event)" name="stock" />
+    </div>
+
+    <div class="campo">
+      <label>Categoria</label>
+      <select [ngModel]="categoriaId()" (ngModelChange)="categoriaId.set($event)" name="categoria">
+        <option [ngValue]="null">-- Selecciona --</option>
+        <option *ngFor="let c of categorias()" [ngValue]="c.id">{{ c.nombre }}</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Proveedor</label>
+      <select [ngModel]="proveedorId()" (ngModelChange)="proveedorId.set($event)" name="proveedor">
+        <option [ngValue]="null">-- Selecciona --</option>
+        <option *ngFor="let p of proveedores()" [ngValue]="p.id">{{ p.nombre }}</option>
+      </select>
+    </div>
+
+    <div class="acciones-form">
+      <app-boton texto="Guardar" tipo="primario"></app-boton>
+      <app-boton texto="Cancelar" tipo="secundario" (clickBoton)="cancelar()"></app-boton>
+    </div>
+  </form>
+
+  <p *ngIf="cargando()">Guardando...</p>
+</div>

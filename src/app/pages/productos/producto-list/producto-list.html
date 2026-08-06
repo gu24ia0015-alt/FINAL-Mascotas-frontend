@@ -1,0 +1,35 @@
+﻿<div class="contenedor">
+  <div class="encabezado">
+    <h2>Productos</h2>
+    <app-boton texto="+ Nuevo Producto" tipo="primario" (clickBoton)="nuevoProducto()"></app-boton>
+  </div>
+
+  <p *ngIf="cargando()">Cargando productos...</p>
+  <p *ngIf="error()" class="mensaje-error">{{ error() }}</p>
+
+  <table *ngIf="!cargando() && !error()" class="tabla">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>SKU</th>
+        <th>Categoria</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of productos()">
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.sku }}</td>
+        <td>{{ producto.categoria_nombre }}</td>
+        <td>${{ producto.precio }}</td>
+        <td>{{ producto.stock }}</td>
+        <td class="acciones">
+          <app-boton texto="Editar" tipo="secundario" (clickBoton)="editarProducto(producto.id!)"></app-boton>
+          <app-boton texto="Eliminar" tipo="peligro" (clickBoton)="eliminarProducto(producto.id!)"></app-boton>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
