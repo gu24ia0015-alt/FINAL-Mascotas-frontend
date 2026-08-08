@@ -2,37 +2,41 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1f2937;
-  padding: 1rem 2rem;
-  font-family: Arial, sans-serif;
+  background-color: var(--color-primario-oscuro);
+  padding: 1.1rem 2rem;
+  font-family: var(--fuente-cuerpo);
 }
 
 .navbar-marca {
-  color: white;
+  color: var(--color-fondo);
+  font-family: var(--fuente-display);
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
 }
 
 .navbar-links {
   display: flex;
-  gap: 1.5rem;
+  gap: 0.5rem;
 }
 
 .navbar-links a {
-  color: #d1d5db;
+  color: #D7E4DB;
   text-decoration: none;
   font-weight: 600;
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
+  font-size: 0.92rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  cursor: pointer;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .navbar-links a:hover {
-  background-color: #374151;
+  background-color: rgba(255,255,255,0.08);
   color: white;
 }
 
 .navbar-links a.activo {
-  background-color: #2563eb;
-  color: white;
+  background-color: var(--color-acento);
+  color: #232320;
 }

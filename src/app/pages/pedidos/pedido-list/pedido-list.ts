@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { PedidoService, Pedido } from '../../../services/pedido';
 import { NavegacionService } from '../../../services/navegacion';
 import { Boton } from '../../../shared/boton/boton';
+import { Tabla, ColumnaTabla } from '../../../shared/tabla/tabla';
 
 @Component({
   selector: 'app-pedido-list',
   standalone: true,
-  imports: [CommonModule, Boton],
+  imports: [CommonModule, Boton, Tabla],
   templateUrl: './pedido-list.html',
   styleUrl: './pedido-list.css'
 })
@@ -15,6 +16,13 @@ export class PedidoList implements OnInit {
   pedidos = signal<Pedido[]>([]);
   cargando = signal<boolean>(true);
   error = signal<string>('');
+
+  columnas: ColumnaTabla[] = [
+    { clave: 'id', etiqueta: 'ID' },
+    { clave: 'cliente_nombre', etiqueta: 'Cliente' },
+    { clave: 'estado', etiqueta: 'Estado' },
+    { clave: 'total', etiqueta: 'Total', tipo: 'moneda' },
+  ];
 
   constructor(private pedidoService: PedidoService, public nav: NavegacionService) {}
 
@@ -30,18 +38,13 @@ export class PedidoList implements OnInit {
     });
   }
 
-  nuevoPedido(): void {
-    this.nav.irANuevo();
-  }
+  nuevoPedido(): void { this.nav.irANuevo(); }
+  editarPedido(fila: Pedido): void { this.nav.irAEditar(fila.id!); }
 
-  editarPedido(id: number): void {
-    this.nav.irAEditar(id);
-  }
-
-  eliminarPedido(id: number): void {
+  eliminarPedido(fila: Pedido): void {
     if (!confirm('Seguro que deseas eliminar este pedido?')) return;
-    this.pedidoService.eliminar(id).subscribe({
-      next: () => this.pedidos.set(this.pedidos().filter(p => p.id !== id)),
+    this.pedidoService.eliminar(fila.id!).subscribe({
+      next: () => this.pedidos.set(this.pedidos().filter(p => p.id !== fila.id)),
       error: (err) => { alert('Error al eliminar.'); console.error(err); }
     });
   }

@@ -1,7 +1,9 @@
-﻿.contenedor { padding: 2rem; font-family: Arial, sans-serif; }
-.encabezado { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-.tabla { width: 100%; border-collapse: collapse; }
-.tabla th, .tabla td { text-align: left; padding: 0.75rem; border-bottom: 1px solid #e5e7eb; }
-.tabla th { background-color: #f9fafb; font-weight: 600; }
+﻿.contenedor { padding: 2.5rem; font-family: var(--fuente-cuerpo); max-width: 1100px; margin: 0 auto; }
+.encabezado { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.75rem; }
+.encabezado h2 { font-size: 1.6rem; margin: 0; color: var(--color-texto); }
+.tabla { width: 100%; border-collapse: collapse; background: var(--color-superficie); border-radius: var(--radio); overflow: hidden; box-shadow: var(--sombra); }
+.tabla th, .tabla td { text-align: left; padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--color-borde); font-size: 0.92rem; }
+.tabla th { background-color: #F1EFE8; font-weight: 700; color: var(--color-texto-suave); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; }
+.tabla tr:last-child td { border-bottom: none; }
 .acciones { display: flex; gap: 0.5rem; }
-.mensaje-error { color: #dc2626; font-weight: 600; }
+.mensaje-error { color: var(--color-peligro); font-weight: 600; }

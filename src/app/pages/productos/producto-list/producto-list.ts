@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { ProductoService, Producto } from '../../../services/producto';
 import { NavegacionService } from '../../../services/navegacion';
 import { Boton } from '../../../shared/boton/boton';
+import { Tabla, ColumnaTabla } from '../../../shared/tabla/tabla';
 
 @Component({
   selector: 'app-producto-list',
   standalone: true,
-  imports: [CommonModule, Boton],
+  imports: [CommonModule, Boton, Tabla],
   templateUrl: './producto-list.html',
   styleUrl: './producto-list.css'
 })
@@ -15,6 +16,14 @@ export class ProductoList implements OnInit {
   productos = signal<Producto[]>([]);
   cargando = signal<boolean>(true);
   error = signal<string>('');
+
+  columnas: ColumnaTabla[] = [
+    { clave: 'nombre', etiqueta: 'Nombre' },
+    { clave: 'sku', etiqueta: 'SKU' },
+    { clave: 'categoria_nombre', etiqueta: 'Categoria' },
+    { clave: 'precio', etiqueta: 'Precio', tipo: 'moneda' },
+    { clave: 'stock', etiqueta: 'Stock' },
+  ];
 
   constructor(private productoService: ProductoService, public nav: NavegacionService) {}
 
@@ -30,18 +39,13 @@ export class ProductoList implements OnInit {
     });
   }
 
-  nuevoProducto(): void {
-    this.nav.irANuevo();
-  }
+  nuevoProducto(): void { this.nav.irANuevo(); }
+  editarProducto(fila: Producto): void { this.nav.irAEditar(fila.id!); }
 
-  editarProducto(id: number): void {
-    this.nav.irAEditar(id);
-  }
-
-  eliminarProducto(id: number): void {
+  eliminarProducto(fila: Producto): void {
     if (!confirm('Seguro que deseas eliminar este producto?')) return;
-    this.productoService.eliminar(id).subscribe({
-      next: () => this.productos.set(this.productos().filter(p => p.id !== id)),
+    this.productoService.eliminar(fila.id!).subscribe({
+      next: () => this.productos.set(this.productos().filter(p => p.id !== fila.id)),
       error: (err) => { alert('Error al eliminar.'); console.error(err); }
     });
   }

@@ -1,4 +1,4 @@
-export const environment = {
+﻿export const environment = {
   production: true,
-  apiUrl: 'https://TU-BACKEND.pythonanywhere.com/api'
+  apiUrl: 'https://mascotas-backend-tvr1.onrender.com/api'
 };

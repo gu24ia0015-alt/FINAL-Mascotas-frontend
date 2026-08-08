@@ -1,0 +1,17 @@
+﻿<table class="tabla">
+  <thead>
+    <tr>
+      <th *ngFor="let col of columnas">{{ col.etiqueta }}</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let fila of datos">
+      <td *ngFor="let col of columnas">{{ valor(fila, col) }}</td>
+      <td class="acciones">
+        <app-boton texto="Editar" tipo="secundario" (clickBoton)="editar.emit(fila)"></app-boton>
+        <app-boton texto="Eliminar" tipo="peligro" (clickBoton)="eliminar.emit(fila)"></app-boton>
+      </td>
+    </tr>
+  </tbody>
+</table>

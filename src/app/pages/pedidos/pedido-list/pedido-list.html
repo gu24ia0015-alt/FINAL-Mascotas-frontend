@@ -7,27 +7,11 @@
   <p *ngIf="cargando()">Cargando pedidos...</p>
   <p *ngIf="error()" class="mensaje-error">{{ error() }}</p>
 
-  <table *ngIf="!cargando() && !error()" class="tabla">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Cliente</th>
-        <th>Estado</th>
-        <th>Total</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let pedido of pedidos()">
-        <td>#{{ pedido.id }}</td>
-        <td>{{ pedido.cliente_nombre }}</td>
-        <td>{{ pedido.estado }}</td>
-        <td>${{ pedido.total }}</td>
-        <td class="acciones">
-          <app-boton texto="Editar" tipo="secundario" (clickBoton)="editarPedido(pedido.id!)"></app-boton>
-          <app-boton texto="Eliminar" tipo="peligro" (clickBoton)="eliminarPedido(pedido.id!)"></app-boton>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <app-tabla
+    *ngIf="!cargando() && !error()"
+    [columnas]="columnas"
+    [datos]="pedidos()"
+    (editar)="editarPedido($event)"
+    (eliminar)="eliminarPedido($event)">
+  </app-tabla>
 </div>

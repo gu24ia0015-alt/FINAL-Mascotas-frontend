@@ -7,29 +7,11 @@
   <p *ngIf="cargando()">Cargando citas...</p>
   <p *ngIf="error()" class="mensaje-error">{{ error() }}</p>
 
-  <table *ngIf="!cargando() && !error()" class="tabla">
-    <thead>
-      <tr>
-        <th>Mascota</th>
-        <th>Veterinario</th>
-        <th>Servicio</th>
-        <th>Fecha</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let cita of citas()">
-        <td>{{ cita.mascota_nombre }}</td>
-        <td>{{ cita.veterinario_nombre }}</td>
-        <td>{{ cita.servicio_nombre }}</td>
-        <td>{{ cita.fecha_hora | date:'short' }}</td>
-        <td>{{ cita.estado }}</td>
-        <td class="acciones">
-          <app-boton texto="Editar" tipo="secundario" (clickBoton)="editarCita(cita.id!)"></app-boton>
-          <app-boton texto="Eliminar" tipo="peligro" (clickBoton)="eliminarCita(cita.id!)"></app-boton>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <app-tabla
+    *ngIf="!cargando() && !error()"
+    [columnas]="columnas"
+    [datos]="citas()"
+    (editar)="editarCita($event)"
+    (eliminar)="eliminarCita($event)">
+  </app-tabla>
 </div>

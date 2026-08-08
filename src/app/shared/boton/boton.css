@@ -1,16 +1,21 @@
-.boton {
+﻿.boton {
   padding: 0.6rem 1.4rem;
   border: none;
-  border-radius: 6px;
-  font-size: 0.95rem;
+  border-radius: var(--radio);
+  font-family: var(--fuente-cuerpo);
+  font-size: 0.92rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  transition: background-color 0.15s ease, transform 0.1s ease;
 }
+
 .boton:active { transform: scale(0.97); }
-.boton-primario { background-color: #2563eb; color: white; }
-.boton-primario:hover { background-color: #1d4ed8; }
-.boton-secundario { background-color: #e5e7eb; color: #1f2937; }
-.boton-secundario:hover { background-color: #d1d5db; }
-.boton-peligro { background-color: #dc2626; color: white; }
-.boton-peligro:hover { background-color: #b91c1c; }
+
+.boton-primario { background-color: var(--color-primario); color: white; }
+.boton-primario:hover { background-color: var(--color-primario-oscuro); }
+
+.boton-secundario { background-color: var(--color-superficie); color: var(--color-texto); border: 1px solid var(--color-borde); }
+.boton-secundario:hover { background-color: #F1EFE8; }
+
+.boton-peligro { background-color: var(--color-peligro); color: white; }
+.boton-peligro:hover { background-color: var(--color-peligro-oscuro); }
